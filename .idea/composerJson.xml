@@ -5,6 +5,6 @@
       <excludedPackages />
     </unboundedVersionInspectionSettings>
     <customRepositories />
+    <composerUpdateOptions />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_3" default="true" />
 </project>

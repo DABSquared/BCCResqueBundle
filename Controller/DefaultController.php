@@ -4,7 +4,6 @@ namespace BCC\ResqueBundle\Controller;
 
 use BCC\ResqueBundle\Entity\ResqueJob;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use JMS\DiExtraBundle\Annotation as DI;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\TwitterBootstrapView;
@@ -17,11 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
 
-    /** @DI\Inject("doctrine") */
     private $registry;
 
-    /** @DI\Inject */
+
     private $router;
+
+    public function __construct() {
+        $this->router = $this->get('router');
+        $this->registry = $this->get('doctrine');
+    }
 
     public function indexAction()
     {
@@ -213,12 +216,12 @@ class DefaultController extends Controller
     /** @return \Doctrine\ORM\EntityManager */
     private function getEm()
     {
-        return $this->registry->getManagerForClass('BCCResqueBundle:ResqueJob');
+        return $this->registry->getManagerForClass(ResqueJob::class);
     }
 
     /** @return \BCC\ResqueBundle\Entity\Repository\ResqueJobRepository */
     private function getRepo()
     {
-        return $this->getEm()->getRepository('BCCResqueBundle:ResqueJob');
+        return $this->getEm()->getRepository(ResqueJob::class);
     }
 }
