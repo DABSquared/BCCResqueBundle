@@ -165,5 +165,5 @@ function getBCCResqueManager($args) {
         $kernel->boot();
     }
 
-    return $kernel->getContainer()->get('bcc_resque.resque');
+    return $kernel->getContainer()->get(\BCC\ResqueBundle\Resque::class);
 }

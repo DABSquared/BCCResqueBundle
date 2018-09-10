@@ -136,7 +136,7 @@ class Resque
 
         $resqueJob = new ResqueJob($job->getBCCJobId(), \get_class($job), $job->queue, $job->args, $at);
 
-        $em = $this->registry->getManagerForClass('BCCResqueBundle:ResqueJob');
+        $em = $this->registry->getManagerForClass(ResqueJob::class);
 
         $em->persist($resqueJob);
         $em->flush($resqueJob);
@@ -161,7 +161,7 @@ class Resque
 
         $resqueJob = new ResqueJob($job->getBCCJobId(), \get_class($job), $job->queue, $job->args, time() + $in);
 
-        $em = $this->registry->getManagerForClass('BCCResqueBundle:ResqueJob');
+        $em = $this->registry->getManagerForClass(ResqueJob::class);
 
         $em->persist($resqueJob);
         $em->flush($resqueJob);
@@ -305,10 +305,10 @@ class Resque
      */
     public function getJob($jobId)
     {
-        $em = $this->registry->getManagerForClass('BCCResqueBundle:ResqueJob');
+        $em = $this->registry->getManagerForClass(ResqueJob::class);
 
         /** @var \BCC\ResqueBundle\Entity\Repository\ResqueJobRepository $resqueJobRepository */
-        $resqueJobRepository = $em->getRepository('BCCResqueBundle:ResqueJob');
+        $resqueJobRepository = $em->getRepository(ResqueJob::class);
 
         /** @var \BCC\ResqueBundle\Entity\ResqueJob $job */
         $job = $resqueJobRepository->findOneByBCCUUID($jobId);
@@ -352,10 +352,10 @@ class Resque
         $args = $job->getArguments();
         $jobId = $args['bcc_resque.job_id'];
 
-        $em = $this->registry->getManagerForClass('BCCResqueBundle:ResqueJob');
+        $em = $this->registry->getManagerForClass(ResqueJob::class);
 
         /** @var \BCC\ResqueBundle\Entity\Repository\ResqueJobRepository $resqueJobRepository */
-        $resqueJobRepository = $em->getRepository('BCCResqueBundle:ResqueJob');
+        $resqueJobRepository = $em->getRepository(ResqueJob::class);
 
         /** @var \BCC\ResqueBundle\Entity\ResqueJob $resqueJob */
         $resqueJob = $resqueJobRepository->findOneByBCCUUID($jobId);
@@ -376,7 +376,7 @@ class Resque
         $statusPacket = json_decode(\Resque::redis()->get('job:' . $job->payload['id'] . ':log'), true);
 
 
-        $em = $this->registry->getManagerForClass('BCCResqueBundle:ResqueJob');
+        $em = $this->registry->getManagerForClass(ResqueJob::class);
 
         /** @var \BCC\ResqueBundle\Entity\Repository\ResqueJobRepository $resqueJobRepository */
         $resqueJobRepository = $em->getRepository('BCCResqueBundle:ResqueJob');
@@ -421,10 +421,10 @@ class Resque
 
         $resqueJob = new ResqueJob($args['bcc_resque.job_id'], $job->payload['class'], $job->queue, $args);
 
-        $em = $this->registry->getManagerForClass('BCCResqueBundle:ResqueJob');
+        $em = $this->registry->getManagerForClass(ResqueJob::class);
 
         /** @var \BCC\ResqueBundle\Entity\Repository\ResqueJobRepository $resqueJobRepository */
-        $resqueJobRepository = $em->getRepository('BCCResqueBundle:ResqueJob');
+        $resqueJobRepository = $em->getRepository(ResqueJob::class);
 
         /** @var \BCC\ResqueBundle\Entity\ResqueJob $resqueJob */
         $oldResqueJob = $resqueJobRepository->findOneByBCCUUID($oldJobId);
